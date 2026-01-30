@@ -70,6 +70,7 @@ a {
     grid-template-columns: repeat(2, 1fr);
     gap:50px;
     text-align: left;
+    align-items: start;
 }
 
 .detail .image img {
@@ -97,15 +98,14 @@ a {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 20px;
+    
 }
 
 .detail .buttons button {
     background-color: #eee;
     border: none;
     padding: 15px 20px;
-    border-radius: 20px;
-    font-size: large;
+    font-size: medium;
     width: 100%;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -135,7 +135,6 @@ a {
     display:flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 20px #2f2f2f77;
     transition: all 0.3s ease;
 }
 
@@ -152,32 +151,18 @@ a {
 
 
 .detail .buttons .back-btn {
-    background-color: #444444;
+    background-color: black;
     color: #eee;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 20px rgba(68, 68, 68, 0.5);
+    margin-bottom: 100px;
+    margin-top: 20px;
 }
 
 
 
-.detail .back-btn {
-    width: 100%;
-    background-color: #444444;
-    color: #eee;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 20px;
-    font-size: large;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 10px 20px rgba(68, 68, 68, 0.5);
-    margin-top: 10px;
-}
+
 
 
 
@@ -221,35 +206,77 @@ a {
 
 }
 
-.quantity {
-    background-color: #eee;
-    border-radius: 20px;
-    font-size: large;
-    text-align: center;
-    padding: 10px; /* aggiungi padding interno */
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* distanza tra label e pulsanti */
-    margin-bottom: 30px;
-}
-
 .quantity-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* distanza tra i due bottoni e il numero */
+    gap: 4px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    
 }
 
 .q-btn {
-    padding: 5px 15px;
-    border-radius: 10px;
-    border: none;
-    background-color: #ccc;
-    font-size: large;
+    padding: 2px 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 1.3rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+    min-height: 24px;
+}
+
+.q-btn:hover {
+    background-color: #f0f0f0;
 }
 
 .q-value {
-    min-width: 30px;
+    min-width: 24px;
     text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.variant-title {
+
+    font-size: 1.4rem;
+    color: darkred;
+}
+
+.variant-options {
+    gap:20px;
+    display:flex;
+    
+}
+.variant-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 10px 18px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: 
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+}
+
+.variant-btn:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.variant-btn:focus {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    outline: none;
+}
+
+.variant-btn.active {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
 }

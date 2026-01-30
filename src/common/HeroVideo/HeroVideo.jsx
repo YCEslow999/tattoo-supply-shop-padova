@@ -15,17 +15,12 @@ export const HeroVideo = () => {
         <div className="separator">
         </div>
         <div className="testo-video">
-          <h1 className="title-video">Prodotti</h1>
+          <h1 className="title-video">Categorie</h1>
           <img src={chromecross} alt="Chrome Cross" className="chrome-cross" />
         </div>
-        <div className = "HeroVideo-categories">
         <CategoryCard title="INCHIOSTRI" imageUrl="https://images.pexels.com/photos/4123711/pexels-photo-4123711.jpeg" path="/inchiostro" />
-        <CategoryCard title="MACCHINETTE" imageUrl="https://tattoounleashed.com/cdn/shop/articles/the-pros-and-cons-of-different-tattoo-machines-198448.jpg?v=1715856207" path="/macchinette" />
-        <CategoryCard title="CATEGORIA 3" imageUrl="" style = {{backgroundColor: "black"}} path="/inchiostro" />
-        <CategoryCard title="CATEGORIA 4" imageUrl="" path="/macchinette" />
         
     
-      </div>  
       </div>
 
 

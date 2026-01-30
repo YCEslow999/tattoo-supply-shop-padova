@@ -9,6 +9,10 @@ export const ProductDetail = () => {
     const { product } = location.state || {};
     const [quantity, setQuantity] = useState(1);
     const [addedToCart, setAddedToCart] = useState(false);
+    const [selectedVariant, setSelectedVariant] = useState(
+        product?.variants?.length ? product.variants[0] : null
+    );
+    
 
     if (!product) {
         return (
@@ -24,15 +28,26 @@ export const ProductDetail = () => {
     const decrease = () => setQuantity(prev => Math.max(1, prev - 1));
 
     const handleAddToCart = () => {
-        addToCart(product, quantity);
-        setAddedToCart(true);
-        setTimeout(() => setAddedToCart(false), 2000);
-    };
+    addToCart(
+        selectedVariant
+            ? { ...product, price: selectedVariant.price, selectedVariant }
+            : product,
+        quantity
+    );
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 2000);
+};
 
-    const handleCheckout = () => {
-        addToCart(product, quantity);
-        navigate('/cart');
-    };
+const handleCheckout = () => {
+    addToCart(
+        selectedVariant
+            ? { ...product, price: selectedVariant.price, selectedVariant }
+            : product,
+        quantity
+    );
+    navigate('/cart');
+};
+
 
     const handleGoBack = () => {
         navigate(-1);
@@ -48,15 +63,34 @@ export const ProductDetail = () => {
                 </div>
                 <div className="content">
                     <h1 className="name">{product.name}</h1>
-                    <div className="price">€ {parseFloat(product.price).toFixed(2)}</div>
+                    <div className="price">
+                        € {parseFloat(selectedVariant?.price ?? product.price).toFixed(2)}
+                    </div>
+                    {product.variants && product.variants.length > 0 && (
+                        <div className="variants">
+                            <hr></hr>
+                            <p className="variant-title"><b>Formato</b></p>
 
-                    <div className="quantity">
-                        <label>QUANTITÀ</label>
-                        <div className="quantity-buttons">
-                            <button className="q-btn" onClick={decrease}>-</button>
-                            <span className="q-value">{quantity}</span>
-                            <button className="q-btn" onClick={increase}>+</button>
+                            <div className="variant-options">
+                                {product.variants.map((variant, index) => (
+                                    <button
+                                        key={index}
+                                        className={`variant-btn ${selectedVariant?.size_ml === variant.size_ml ? 'active' : ''
+                                            }`}
+                                        onClick={() => setSelectedVariant(variant)}
+                                        disabled={variant.stock === 0}
+                                    >
+                                        {variant.size_ml} ml
+                                    </button>
+                                ))}
+                            </div>
                         </div>
+                    )}
+
+                    <div className="quantity-buttons">
+                        <button className="q-btn" onClick={decrease}>-</button>
+                        <span className="q-value">{quantity}</span>
+                        <button className="q-btn" onClick={increase}>+</button>
                     </div>
 
                     <div className="buttons">

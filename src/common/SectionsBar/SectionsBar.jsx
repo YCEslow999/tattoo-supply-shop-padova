@@ -4,17 +4,34 @@ import { categoriesImages } from "../../assets/assets";
 import { redirect, useNavigate } from "react-router-dom";
 
 const categories = {
-  colori: ["Intenze", "World_Famous", "Eternal_Ink", "Dynamic"],
-  aghi: ["Cartucce_RL", "Magnum", "Shader"],
-  aghiClassici: ["Aghi_RL", "RS", "Grips"],
-  consumo: ["Soap", "Finish", "AfterCare"],
-  piercing: ["Barbell", "Punte"]
+  Inchiostro: ["Intenze", "World_Famous", "Eternal_Ink", "Dynamic"],
+
 };
+
+
 
 export const SectionsBar = () => {
   const [active, setActive] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState({});
+  const [fetchedBrands, setFetchedBrands] = useState({});
+
+
+  const fetchBrandsByCategory = async (category) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/brands/${category}`);
+      const data = await res.json();
+
+
+      setFetchedBrands(prev => ({
+        ...prev,
+        [category]: data
+      }));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const navigate = useNavigate();
 
   const toggleSection = (key) => {
@@ -24,10 +41,10 @@ export const SectionsBar = () => {
 
 
   const handleItemClick = (item) => {
-    navigate("/shop", {state : { selectedCategory: item }});
+    navigate("/shop", { state: { selectedCategory: item } });
   };
 
-  
+
   return (
     <div
       className="sectionsbar-wrapper"
@@ -43,11 +60,16 @@ export const SectionsBar = () => {
           ☰
         </button>
         <ul>
-          <li onMouseEnter={() => setActive("colori")}>Colori per tatuaggio</li>
-          <li onMouseEnter={() => setActive("aghi")}>Aghi e cartucce</li>
-          <li onMouseEnter={() => setActive("aghiClassici")}>Aghi classici e grips</li>
-          <li onMouseEnter={() => setActive("consumo")}>Consumo</li>
-          <li onMouseEnter={() => setActive("piercing")}>Body piercing</li>
+          <li
+            onMouseEnter={() => {
+              setActive("Inchiostro");
+              if (!fetchedBrands["Inchiostro"]) {
+                fetchBrandsByCategory("Inchiostro");
+              }
+            }}
+          >
+            Inchiostro
+          </li>
         </ul>
       </div>
       {/* MOBILE LEFT DRAWER */}
@@ -68,7 +90,7 @@ export const SectionsBar = () => {
                 <div className="drawer-items" style={{ display: openSections[catKey] ? 'flex' : 'none' }}>
                   {categories[catKey].map(item => (
                     <div key={item} className="drawer-item">
-                     
+
                       <div className="icon-wrap">
                         <img src={categoriesImages[item] || `https://via.placeholder.com/80?text=${encodeURIComponent(item.split(" ")[0])}`} alt="" className="dropdown-icon" />
                       </div>
@@ -84,21 +106,21 @@ export const SectionsBar = () => {
 
       <div className={`sectionsbar-dropdown ${active ? "open" : ""}`}>
         {active &&
-          categories[active].map(item => (
-            <div key={item} className="dropdown-item"
-            onClick= {() => {
-              handleItemClick(item)
-              console.log(item);  
-            }
-              
-            }
+          fetchedBrands[active]?.map(brand => (
+            <div key={brand.name} className="dropdown-item"
+              onClick={() => {
+                handleItemClick(brand.name);
+                console.log(brand.name);
+              }
+
+              }
             >
               <img
-                src={categoriesImages[item]}
-
+                src={brand.image_url}
                 className="dropdown-icon"
+                alt={brand.name}
               />
-              <span className="dropdown-text">{item}</span>
+              <span className="dropdown-text">{brand.name}</span>
             </div>
           ))
         }

@@ -3,7 +3,7 @@
     height: 50vh;
     min-height: 500px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 90vw;
+    width:100%;
     overflow: hidden;
     text-align: center;
     font-family: 'Cinzel', serif;
@@ -11,9 +11,9 @@
     padding: 0;
     position: relative;
     cursor: pointer;
+    
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     
-  width:100vh;
   }
 
 

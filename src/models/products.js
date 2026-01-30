@@ -16,7 +16,27 @@ const productSchema = new mongoose.Schema(
         stock: Number,
 
         image_url: String,
-        is_active: Boolean
+        is_active: Boolean,
+
+        variants: [
+            {
+                size_ml: {
+                    type: Number,
+                    required: true
+                },
+                price: {
+                    type: Number,
+                    required: true
+                },
+                
+                stock: {
+                    type: Number,
+                    required: true
+                }
+
+            }
+        ]
+
     }
 )
 

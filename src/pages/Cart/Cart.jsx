@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Cart.css';
 import axios from 'axios';
-import { getCart, removeFromCart, addToCart, setCart } from '../../services/cart';
+import { getCart, removeFromCart, setCart } from '../../services/cart';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Cart = () => {
@@ -10,26 +10,45 @@ export const Cart = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  /* Fetch di TUTTI i prodotti dal database */
+  // Fetch tutti i prodotti dal DB
   useEffect(() => {
     axios.get('http://localhost:5000/api/products/all')
       .then(res => setAllProducts(res.data))
       .catch(err => console.log(err));
   }, []);
 
-  /* Funzione helper per arricchire il carrello */
+  // Arricchisce il carrello con dati dal DB
   const enrichCart = (products) => {
     const cart = getCart();
     return cart.map(cartItem => {
       const product = products.find(p => p._id.toString() === cartItem.id.toString());
+      if (!product) return null;
+
+      let price = product.price;
+      let variantId = null;
+      let variantLabel = null;
+
+      // Se il carrello ha variante, usa prezzo e label della variante
+      if (cartItem.variantId && product.variants?.length > 0) {
+        const variant = product.variants.find(v => v._id === cartItem.variantId);
+        if (variant) {
+          price = variant.price;
+          variantId = variant._id;
+          variantLabel = `${variant.size_ml}ml`;
+        }
+      }
+
       return {
-        ...cartItem,
-        ...product
+        ...product,
+        qty: cartItem.qty || 1,
+        variantId,
+        variantLabel,
+        price,
       };
-    }).filter(item => item.name);
+    }).filter(item => item !== null);
   };
 
-  /* Carica il carrello e aggiorna quando cambia allProducts */
+  // Aggiorna carrello quando cambiano i prodotti
   useEffect(() => {
     if (allProducts.length > 0) {
       const enrichedCart = enrichCart(allProducts);
@@ -38,172 +57,129 @@ export const Cart = () => {
     }
   }, [allProducts]);
 
-  /* Listener per aggiornamenti del carrello */
+  // Listener per aggiornamenti del carrello
   useEffect(() => {
     const handleCartUpdate = () => {
       const enrichedCart = enrichCart(allProducts);
       setCartItems(enrichedCart);
     };
-
     window.addEventListener('cart-updated', handleCartUpdate);
     return () => window.removeEventListener('cart-updated', handleCartUpdate);
   }, [allProducts]);
 
-  const handleQuantityChange = (productId, newQty) => {
+  const handleQuantityChange = (productId, newQty, variantId = null) => {
+    const cart = getCart();
+    const item = cart.find(i => i.id === productId && i.variantId === variantId);
+    if (!item) return;
+
     if (newQty <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productId, variantId);
     } else {
-      const cart = getCart();
-      const item = cart.find(i => i.id === productId);
-      if (item) {
-        item.qty = newQty;
-        setCart(cart);
-      }
+      item.qty = newQty;
+      setCart(cart);
     }
+
+    // Dispatch evento per aggiornare il carrello
+    window.dispatchEvent(new Event('cart-updated'));
   };
 
-  const handleRemove = (productId) => {
-    removeFromCart(productId);
+  const handleRemove = (productId, variantId = null) => {
+    removeFromCart(productId, variantId);
+    const enrichedCart = enrichCart(allProducts);
+    setCartItems(enrichedCart);
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => {
-      return sum + (parseFloat(item.price) * (item.qty || 1));
-    }, 0).toFixed(2);
+    return cartItems.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2);
   };
 
-  const handleCheckout = () => {
-    alert('Pagamenti ancora in implementazione');
-    // TODO: Implementare la pagina di checkout
+  // Checkout con Stripe
+  const handleCheckout = async () => {
+    try {
+      const items = cartItems.map(item => ({
+        productId: item._id,
+        variantId: item.variantId,
+        quantity: item.qty,
+      }));
+
+      const res = await axios.post('http://localhost:5000/api/checkout', { items });
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || "Errore durante il pagamento");
+    }
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  const handleGoBack = () => navigate(-1);
 
-  if (loading) {
-    return <div className="cart-loading">Caricamento...</div>;
-  }
+  if (loading) return <div className="cart-loading">Caricamento...</div>;
 
   return (
     <div className="cart-page">
-
-
       {cartItems.length === 0 ? (
         <div className="cart-empty">
           <h2>Il tuo carrello è vuoto</h2>
-          <p>Scopri i nostri inchiostri di qualità premium</p>
-          <Link to="/inchiostro" className="continue-shopping-btn">
-            Continua lo shopping
-          </Link>
+          <p>Scopri i nostri prodotti di qualità</p>
+          <Link to="/inchiostro" className="continue-shopping-btn">Continua lo shopping</Link>
         </div>
       ) : (
         <div className="cart-container">
           <div className="cart-items-section">
             <h2 className="section-title">Prodotti nel carrello</h2>
             <div className="cart-items">
-              {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
+              {cartItems.map(item => (
+                <div key={item._id + (item.variantId || '')} className="cart-item">
                   <div className="item-image">
                     <img src={item.image_url} alt={item.name} />
                   </div>
 
                   <div className="item-details">
-                    <h3 className="item-title">{item.name}</h3>
+                    <h3 className="item-title">{item.name}{item.variantLabel ? ` - ${item.variantLabel}` : ''}</h3>
                     <p className="item-price">€ {parseFloat(item.price).toFixed(2)}</p>
                   </div>
 
                   <div className="item-quantity">
                     <label>Quantità:</label>
                     <div className="quantity-controls">
-                      <button
-                        onClick={() => handleQuantityChange(item.id, (item.qty || 1) - 1)}
-                        className="qty-btn"
-                      >
-                        −
+                      <button onClick={() => handleQuantityChange(item._id, item.qty - 1, item.variantId)} className="qty-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                        </svg>
                       </button>
-                      <input
-                        type="number"
-                        value={item.qty || 1}
-                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
-                        className="qty-input"
-                        min="1"
-                      />
-                      <button
-                        onClick={() => handleQuantityChange(item.id, (item.qty || 1) + 1)}
-                        className="qty-btn"
-                      >
-                        +
+                      <input type="number" value={item.qty} onChange={(e) => handleQuantityChange(item._id, parseInt(e.target.value) || 1, item.variantId)} min="1" className="qty-input"/>
+                      <button onClick={() => handleQuantityChange(item._id, item.qty + 1, item.variantId)} className="qty-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
                       </button>
                     </div>
                   </div>
 
                   <div className="item-subtotal">
-                    <p className="subtotal-label">Subtotale</p>
-                    <p className="subtotal-price">€ {(parseFloat(item.price) * (item.qty || 1)).toFixed(2)}</p>
+                    <p className="subtotal-price">€ {(item.price * item.qty).toFixed(2)}</p>
                   </div>
 
-                  <button
-                    onClick={() => handleRemove(item.id)}
-                    className="remove-btn"
-                    title="Rimuovi dal carrello"
-                  >
-                    {/* TRASH ICON*/}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16" >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                  <button onClick={() => handleRemove(item._id, item.variantId)} className="trash-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                     </svg>
-
                   </button>
                 </div>
               ))}
             </div>
 
-
-            {/* DEVE DIVENTARE CONDIZIONALE LA PAGINA DI RITORNO */}
-            <Link to="/inchiostro" className="continue-btn">
-              Continua lo shopping
-            </Link>
+            <Link to="/inchiostro" className="continue-btn">Continua lo shopping</Link>
           </div>
 
-
           <div className="cart-summary">
-            <h2 className="summary-title">Riepilogo ordine</h2>
-
-            <div className="summary-details">
-              <div className="summary-row">
-                <span>Subtotale:</span>
-                <span>€ {calculateTotal()}</span>
-              </div>
-              <div className="summary-row">
-                <span>Spedizione:</span>
-                <span className="shipping">Gratuita</span>
-              </div>
-              <div className="summary-divider"></div>
-              <div className="summary-row total">
-                <span>Totale:</span>
-                <span>€ {calculateTotal()}</span>
-              </div>
+            <h2 style = {{color: "white"}}>Riepilogo ordine</h2>
+            <div className="summary-row">
+              <span>Totale:</span>
+              <span>€ {calculateTotal()}</span>
             </div>
-
-            <button
-              onClick={handleCheckout}
-              className="checkout-btn"
-            >
-              Procedi al checkout
-            </button>
-
-            <button
-              onClick={handleGoBack}
-              className="back-btn"
-            >
-              ← Torna indietro
-            </button>
-
-            <div className="payment-methods">
-              <p className="methods-title">Metodi di pagamento accettati:</p>
-
-            </div>
+            <button onClick={handleCheckout} className="checkout-btn">Procedi al checkout</button>
+            <button onClick={handleGoBack} className="back-btn">← Torna indietro</button>
           </div>
         </div>
       )}

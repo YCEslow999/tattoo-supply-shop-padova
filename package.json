@@ -39,6 +39,7 @@
     "class-variance-authority": "^0.7.1",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
+    "dotenv": "^17.2.3",
     "embla-carousel-react": "^7.1.0",
     "express": "^5.2.1",
     "jwt-decode": "^4.0.0",
@@ -56,7 +57,8 @@
     "react-router-dom": "^6.18.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
-    "tailwind": "^4.0.0",
+    "stripe": "^20.2.0",
+    "tailwind": "^2.3.1",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

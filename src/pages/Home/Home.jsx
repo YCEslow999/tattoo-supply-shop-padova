@@ -4,6 +4,7 @@ import { Hero } from "../../common/Hero/Hero";
 import SectionsBar from "../../common/SectionsBar/SectionsBar";
 
 import HeroVideo from "../../common/HeroVideo/HeroVideo";
+import Info from "../../common/Info/Info";
 
 export const Home = () => {
     return (
@@ -11,6 +12,7 @@ export const Home = () => {
             <SectionsBar />
             <Hero />
             <HeroVideo />
+            <Info />
         </>
     )
 }

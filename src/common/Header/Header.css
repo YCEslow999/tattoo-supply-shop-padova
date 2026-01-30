@@ -33,7 +33,7 @@
     font-family: 'Cinzel', serif;
     /* Responsive but bounded: stays readable on small screens without becoming huge */
     font-size: clamp(1.4rem, 3.2vw + 0.6rem, 2.4rem);
-    letter-spacing: 0.25em;
+    letter-spacing: 0.12em;
     color: white;
     text-align: center;
     margin-bottom: 0.5rem;
