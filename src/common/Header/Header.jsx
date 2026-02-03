@@ -64,6 +64,7 @@ export const Header = () => {
             
 
 
+            
             {rdxToken && tokenExpired === false ? (
                 <>
                     <LinkButton className={"header-button"} path={"/profile"} title={"Profile"} />
@@ -81,6 +82,7 @@ export const Header = () => {
                     )}
                 </>
             ) : null}
+
         </>
     );
 
@@ -120,7 +122,7 @@ export const Header = () => {
             <header className="header">
                 
                 <div className="header-bar header-button">
-                    <LinkButton className={"header-brand"} path={"/"} title={"TATTOO SUPPLY SHOP PADOVA"} />
+                    <LinkButton className={"header-brand"} path={"/"} title={"TATTOO SUPPLY SHOP"} />
                 </div>
 
                 <div className="button-container">

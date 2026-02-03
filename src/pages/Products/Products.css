@@ -1,4 +1,3 @@
-
 .inchiostro-page {
   width: 100vw;
   min-height: 70vh;
@@ -146,6 +145,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -206,6 +206,18 @@
   .inchiostro-container {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .ink-card-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .inchiostro-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
     padding: 0 0.5rem;
   }
 }
@@ -407,14 +419,17 @@
   font-family: 'Cinzel', serif;
   text-align: center;
   color: white;
-  background-color: rgba(33, 37, 41, 0.85); /* Dark Grey */
+  background-color: rgba(33, 37, 41, 0.85);
+  /* Dark Grey */
   border-radius: 8px;
   padding: 20px;
-  margin: 20px; /* To match product-grid padding */
+  margin: 20px;
+  /* To match product-grid padding */
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 300px; /* Ensure a minimum height */
+  min-height: 300px;
+  /* Ensure a minimum height */
   flex-grow: 1;
 }
 

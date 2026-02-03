@@ -36,6 +36,10 @@ export const SectionsBar = () => {
 
   const toggleSection = (key) => {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }));
+
+    if (!fetchedBrands[key]) {
+      fetchBrandsByCategory(key);
+    }
   };
 
 
@@ -88,13 +92,25 @@ export const SectionsBar = () => {
                   <span className={`drawer-arrow ${openSections[catKey] ? 'open' : ''}`}>▾</span>
                 </button>
                 <div className="drawer-items" style={{ display: openSections[catKey] ? 'flex' : 'none' }}>
-                  {categories[catKey].map(item => (
-                    <div key={item} className="drawer-item">
-
+                  {fetchedBrands[catKey]?.map(brand => (
+                    <div
+                      key={brand.name}
+                      className="drawer-item"
+                      onClick={() => {
+                        handleItemClick(brand.name);
+                        setDrawerOpen(false);
+                      }}
+                    >
                       <div className="icon-wrap">
-                        <img src={categoriesImages[item] || `https://via.placeholder.com/80?text=${encodeURIComponent(item.split(" ")[0])}`} alt="" className="dropdown-icon" />
+                        <img
+                          src={brand.image_url}
+                          alt={brand.name}
+                          className="dropdown-icon"
+                        />
                       </div>
-                      <div className="drawer-item-text">{item.replace(/_/g, ' ')}</div>
+                      <div className="drawer-item-text">
+                        {brand.name}
+                      </div>
                     </div>
                   ))}
                 </div>

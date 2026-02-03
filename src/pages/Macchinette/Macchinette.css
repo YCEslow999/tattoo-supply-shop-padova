@@ -159,7 +159,7 @@
     }
   
     .inchiostro-container {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
       padding: 0 0.75rem;
       

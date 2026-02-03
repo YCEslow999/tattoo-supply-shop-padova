@@ -68,7 +68,11 @@
 @media (max-width: 480px) {
   .ink-card-title,
   .ink-card-price {
-    font-size: 2rem;
+    font-size: 1rem;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   
   .ink-card-content {

@@ -4,6 +4,7 @@ import cors from 'cors';
 import products from './models/products.js';
 import brands from './models/brands.js';
 
+
 const app = express();
 const PORT = 5000;
 import Stripe from 'stripe';
@@ -12,34 +13,33 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
+
+
+// Connessione al database
+mongoose.connect(
+    "mongodb://localhost:27017/tattoo_supply"
+)
+.then (() => {
+
+    console.log("MongoDB connesso");
+    app.listen(PORT, () => {
+    console.log(`Server avviato sulla porta ${PORT}`);
+})
+
+})
+.catch(err => console.log("Connessione a MongoDB fallita", err));
+
+
+
+
+
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 
 app.use(cors());
 app.use(express.json());
-
-
-
-
-
-
-// Connessione al database
-mongoose.connect(
-  "mongodb://localhost:27017/tattoo_supply"
-)
-  .then(() => {
-
-    console.log("MongoDB connesso");
-    app.listen(PORT, () => {
-      console.log(`Server avviato sulla porta ${PORT}`);
-    })
-
-  })
-  .catch(err => console.log("Connessione a MongoDB fallita", err));
-
-
-
 
 
 

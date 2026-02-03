@@ -39,6 +39,7 @@
     margin-bottom: 0.5rem;
     line-height: 1.2;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 /* Wrapper per navbar con link e carrello */
@@ -224,7 +225,8 @@
     }
 
     .header {
-        padding: 1rem 1.2rem; /* more padding for finger-friendly tap */
+        padding: 1.1rem 1.2rem; /* more padding for finger-friendly tap */
+        border-bottom: 3px solid #222222;
     }
 
     .header-brand {
