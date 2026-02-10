@@ -1,0 +1,25 @@
+.ig-link {
+    display: inline-block;
+    line-height: 0
+}
+
+.ig-logo {
+    margin-top: 40px;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform .15s ease, opacity .15s ease
+}
+
+.ig-link:hover .ig-logo {
+    transform: scale(1.06)
+}
+
+.ig-logo:focus {
+    outline: 2px solid rgba(0, 0, 0, .1);
+    outline-offset: 2px
+}

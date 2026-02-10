@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "application": "concurrently \"npm run dev \" \"node ./src/server.js\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -26,7 +27,8 @@
     "@mantine/nprogress": "^7.2.1",
     "@mantine/spotlight": "^7.2.1",
     "@mantine/tiptap": "^7.2.1",
-    "@mui/material": "^7.3.6",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
     "@radix-ui/react-slot": "^1.2.4",
     "@reduxjs/toolkit": "^1.9.7",
     "@tabler/icons-react": "^2.40.0",
@@ -37,12 +39,14 @@
     "axios": "^1.6.1",
     "bootstrap": "^5.3.8",
     "class-variance-authority": "^0.7.1",
+    "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
     "dotenv": "^17.2.3",
     "embla-carousel-react": "^7.1.0",
     "express": "^5.2.1",
     "jwt-decode": "^4.0.0",
+    "markdown-to-jsx": "^9.7.3",
     "mdb-ui-kit": "^9.3.0",
     "mongodb": "^7.0.0",
     "mongoose": "^9.1.1",
@@ -62,8 +66,8 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.22",
     "eslint": "^8.45.0",
@@ -72,6 +76,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3",
     "vite": "^4.4.5"
   }
 }

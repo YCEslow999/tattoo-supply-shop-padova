@@ -21,7 +21,7 @@ import {Macchinette} from '../Macchinette/Macchinette';
 import {Accessori} from '../Accessori/Accessori';
 import ProductDetail from '../ProductDetail/ProductDetail';
 import Cart from '../Cart/Cart.jsx';
-
+import InfoPage from '../InfoPage/InfoPage.jsx';
 
 export const Body = () => {
      return (
@@ -41,6 +41,7 @@ export const Body = () => {
                 <Route path='/macchinette' element = {<Macchinette />}></Route>
                 <Route path='/product-detail' element = {<ProductDetail />}></Route>
                 <Route path='/cleaning' element = {<Cleaning />}></Route>
+                <Route path='/info' element = {<InfoPage />}></Route>
             
             </Routes>
          </>
