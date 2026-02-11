@@ -1,6 +1,6 @@
 import './InfoPage.css'
 import React from 'react'
-
+import { useEffect } from 'react'
 export const InfoPage = () => {
   const openingHours = [
     { day: 'Lunedì', hours: '09:00 - 18:00' },
@@ -12,10 +12,15 @@ export const InfoPage = () => {
     { day: 'Domenica', hours: 'Chiuso' }
   ]
 
+  /* Scroll to top on mount */
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="info-page">
-      
-      
+
+
 
       {/* OPENING HOURS SECTION */}
       <section className="info-section dark">

@@ -15,7 +15,7 @@ export const Inchiostro = () => {
 
   /* Fetch dati dal backend */
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products/ink_products')
+    axios.get('http://localhost:5001/api/products/ink_products')
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, []);

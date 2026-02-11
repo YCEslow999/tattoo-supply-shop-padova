@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: "Cinzel", serif;
-    
+    color: white;
 }
 
 
@@ -26,7 +26,7 @@ a {
 .title {
     font-size: 3rem;
     padding: 20px 0;
-    margin-bottom: 70px;
+    margin-bottom: 0px;
     margin-top: 10px;
     
     font-weight: bold;
@@ -217,14 +217,14 @@ a {
 }
 
 .q-btn {
-    padding: 2px 8px;
+    padding: 8px 14px;
     border: 1px solid #ccc;
     background-color: #fff;
     font-size: 1.3rem;
     cursor: pointer;
     transition: all 0.2s ease;
     line-height: 1;
-    min-height: 24px;
+    min-height: 36px;
 }
 
 .q-btn:hover {

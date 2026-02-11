@@ -12,7 +12,7 @@ export const Cart = () => {
 
   // Fetch tutti i prodotti dal DB
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products/all')
+    axios.get('http://localhost:5001/api/products/all')
       .then(res => setAllProducts(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -102,7 +102,7 @@ export const Cart = () => {
         quantity: item.qty,
       }));
 
-      const res = await axios.post('http://localhost:5000/api/checkout', { items });
+      const res = await axios.post('http://localhost:5001/api/checkout', { items });
       window.location.href = res.data.url;
     } catch (err) {
       console.error(err);

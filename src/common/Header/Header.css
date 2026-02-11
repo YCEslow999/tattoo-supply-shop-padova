@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Young+Serif&display=swap');
 
-:root {
-    /* altezza base header, adattata in mobile più sotto */
-    --header-height: 160px;
-}
+
 
 /* -------------------- HEADER -------------------- */
 
@@ -12,7 +9,55 @@
     top: 0;
     left: 0;
     width: 100vw;
-    background-color: rgba(0, 0, 0, 1);
+    height: 100px;
+    display: flex;
+    justify-content: center; /* centra il logo */
+    align-items: center;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header-right {
+    position: absolute;
+    right: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+
+/* Logo immagine */
+.header-logo-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header-logo {
+    height: 100px;        /* grande ma elegante */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background-color: black;
 
     
     -webkit-backdrop-filter: blur(12px);
@@ -49,6 +94,30 @@
     align-items: center;
     width: 100%;
     position: relative;
+}
+
+.header-icon-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.header-icon-link:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
+.header-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.icon-text {
+    font-size: 1rem;
+    font-family: 'Cinzel', serif;
 }
 
 /* Contenitore dei bottoni (desktop/tablet) */

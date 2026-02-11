@@ -21,7 +21,7 @@ export const Products = () => {
 
   /* Fetch di TUTTI i prodotti dal backend */
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products/all')
+    axios.get('http://localhost:5001/api/products/all')
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, []);

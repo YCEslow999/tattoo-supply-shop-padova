@@ -7,6 +7,7 @@ import HomeCard from '../HomeCard/HomeCard';
 const video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 import CategoryCard from '../CategoryCard/CategoryCard';
 import chromecross from '../../assets/chrome_cross.png'
+import inchiostroImage from '../../assets/inchiostro.jpg';
 export const HeroVideo = () => {
   return (
     <>
@@ -15,10 +16,10 @@ export const HeroVideo = () => {
         <div className="separator">
         </div>
         <div className="testo-video">
-          <h1 className="title-video">Categorie</h1>
+          <h1 className="title-video">prodotti</h1>
           <img src={chromecross} alt="Chrome Cross" className="chrome-cross" />
         </div>
-        <CategoryCard title="INCHIOSTRI" imageUrl="https://images.pexels.com/photos/4123711/pexels-photo-4123711.jpeg" path="/inchiostro" />
+        <CategoryCard title="" imageUrl={inchiostroImage} path="/inchiostro" />
         
     
       </div>

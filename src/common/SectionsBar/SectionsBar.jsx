@@ -19,7 +19,7 @@ export const SectionsBar = () => {
 
   const fetchBrandsByCategory = async (category) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/brands/${category}`);
+      const res = await fetch(`http://localhost:5001/api/brands/${category}`);
       const data = await res.json();
 
 

@@ -9,6 +9,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, selectToken } from "../../pages/userSlice";
 import { Link } from 'react-router-dom';
 import { getCartCount } from '../../services/cart';
+import Tigre from '../../assets/tigre.png';
+import { FiShoppingCart, FiShoppingBag } from "react-icons/fi";
+
 export const Header = () => {
     const dispatch = useDispatch();
     const rdxToken = useSelector(selectToken);
@@ -59,12 +62,13 @@ export const Header = () => {
 
     const renderLinks = () => (
         <>
-            <LinkButton className={"header-button"} path={"/shop"} title={"Shop"} />
-            <LinkButton className={"header-button"} path={"/cart"} title={"Carrello"} />
-            
+            <Link to="/shop" className="header-icon-link">
+                <FiShoppingBag className="header-icon" />
+            </Link>
+            <Link to="/cart" className="header-icon-link">
+                <FiShoppingCart className="header-icon" />
+            </Link>
 
-
-            
             {rdxToken && tokenExpired === false ? (
                 <>
                     <LinkButton className={"header-button"} path={"/profile"} title={"Profile"} />
@@ -119,26 +123,27 @@ export const Header = () => {
 
     return (
         <>
-            <header className="header">
-                
-                <div className="header-bar header-button">
-                    <LinkButton className={"header-brand"} path={"/"} title={"TATTOO SUPPLY SHOP"} />
-                </div>
+        <header className="header">
 
-                <div className="button-container">
-                    {renderLinks()}
-                </div>
+    {/* Logo centrale */}
+    <div className="header-center">
+        <Link to="/" className="header-logo-link">
+            <img src={Tigre} alt="Logo" className="header-logo" />
+        </Link>
+    </div>
 
+    {/* Icone a destra */}
+    <div className="header-right">
+        <Link to="/shop" className="header-icon-link">
+            <FiShoppingBag className="header-icon" />
+        </Link>
 
-                <div
-                    className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}
-                    onClick={() => setIsMobileMenuOpen(prev => !prev)}
-                >
-                    <span className="hamburger-line" />
-                    <span className="hamburger-line" />
-                    <span className="hamburger-line" />
-                </div>
-            </header>
+        <Link to="/cart" className="header-icon-link">
+            <FiShoppingCart className="header-icon" />
+        </Link>
+    </div>
+
+</header>
 
             <nav
                 className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}

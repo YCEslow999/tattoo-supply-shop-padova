@@ -495,6 +495,7 @@
 @media (max-width: 1024px) {
   .cart-page .cart-container {
     grid-template-columns: 1fr;
+    padding-top:120px;
   }
 
   .cart-summary {
@@ -635,6 +636,7 @@
   .cart-page {
     padding : 15px;
     padding-top: calc(var(--header-height) + 20px);
+    padding-top:120px;
   }
 
   .cart-items-section {

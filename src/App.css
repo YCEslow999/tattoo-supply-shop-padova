@@ -4,6 +4,7 @@
   padding: 0;
   text-align: center;
   overflow-x: hidden;
+  background-color: #222222;
 }
 /* Keep a stable root font-size to avoid overly small text on narrow screens.
    If you want slight scaling, prefer `clamp()` or modest percent values. */
@@ -12,6 +13,5 @@
 
 * {
   margin: 0;
-  
 }
 

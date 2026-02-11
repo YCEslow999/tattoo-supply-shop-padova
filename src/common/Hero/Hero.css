@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Young+Serif&display=swap');
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 5rem;
 }
 
 
@@ -76,6 +76,14 @@ a:hover {
 .hero-title {
   font-weight: 300;
 
+}
+
+@media (max-width:800px) {
+  .hero-title { 
+    font-size: clamp(2.8rem, 8vw, 3.5rem);
+        letter-spacing: 0.06em;
+
+  }
 }
 
 @media (max-width:500px) {

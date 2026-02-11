@@ -6,7 +6,7 @@ import brands from './models/brands.js';
 
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 
@@ -17,7 +17,7 @@ dotenv.config();
 
 // Connessione al database
 mongoose.connect(
-    "mongodb://localhost:27017/tattoo_supply"
+    process.env.MONGO_URI
 )
 .then (() => {
 
@@ -130,12 +130,19 @@ app.post("/api/checkout", async (req, res) => {
     });
 
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["card"],
-      line_items: lineItems,
-      success_url: "http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:3000/cart",
-    });
+  mode: "payment",
+  payment_method_types: ["card"],
+  line_items: lineItems,
+
+  // 👇 AGGIUNGI QUESTO
+  shipping_address_collection: {
+    allowed_countries: ["IT"], // metti i paesi dove spedisci
+  },
+
+  success_url: "http://localhost:5001/success?session_id={CHECKOUT_SESSION_ID}",
+  cancel_url: "http://localhost:5001/cart",
+});
+
 
     res.json({ url: session.url });
   } catch (err) {
