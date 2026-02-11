@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import products from './models/products.js';
 import brands from './models/brands.js';
+import categories from './models/categories.js';
 
 
 const app = express();
@@ -168,5 +169,16 @@ app.get("/api/brands/:category", async (req, res) => {
 
   } catch (err) {
     res.status(500).json({ error: "Errore recupero brands" });
+  }
+});
+
+
+// GET ALL CATEGORIES (nome + image_url)
+app.get('/api/categories/all', async (req, res) => {
+  try {
+    const cats = await categories.find({}, { name: 1, image_url: 1, _id: 0 });
+    res.json(cats);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore recupero categories' });
   }
 });
