@@ -138,6 +138,7 @@
 .ink-card-wrapper {
   animation: fadeInScale 0.6s ease-out forwards;
   opacity: 0;
+
 }
 
 @keyframes fadeInScale {
@@ -346,14 +347,30 @@
 }
 
 @media (max-width: 768px) {
-  .category-card {
-    height: 140px;
+  .category-card-clean {
+    height: 210px;
+    
   }
   .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    
   }
+
 }
 
+@media (max-width: 1110px) {
+  .categories-grid {
+    gap: 2rem 2rem;
+  }
+
+
+  .category-title-clean {
+    font-size: 1rem;
+  }
+  .category-overlay {
+      padding: 0.4rem 0.6rem;
+  }
+}
 .filter-reset-btn {
   padding: 0.75rem 1.5rem;
   background-color: rgba(255, 255, 255, 0.1);
@@ -494,6 +511,9 @@
     gap: 15px;
     padding: 10px;
   }
+  .categories-grid {
+    gap: 1rem;
+  }
 }
 
 /* Loading, Error, Empty states */
@@ -557,5 +577,73 @@ FOR CARDS 04-12-2025
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 15px;
+  }
+}
+
+/* Mobile optimizations for product/category cards */
+@media (max-width: 500px) {
+  .product-grid,
+  .inchiostro-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 8px;
+
+  }
+
+  /* Keep category cards flexible but do not interfere with InkCard layout */
+  .category-card-clean,
+  .category-card {
+    aspect-ratio: auto;
+    padding: 0;
+  }
+
+  .category-image,
+  .product-grid img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+
+
+  .category-overlay {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .category-title-clean {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  .category-card-title {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .products-title,
+  .inchiostro-title {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+
+  .products-subtitle,
+  .inchiostro-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .ink-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ink-card-wrapper a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .filter-reset-btn {
+    width: 100%;
   }
 }

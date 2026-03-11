@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100px;
+    height: 110px;
     display: flex;
     justify-content: center; /* centra il logo */
     align-items: center;
@@ -295,9 +295,13 @@
 
     .header {
         padding: 1.1rem 1.2rem; /* more padding for finger-friendly tap */
-        border-bottom: 3px solid #222222;
+        border-bottom: 1px solid #222222;
+        height:90px;
     }
 
+    .header-logo {
+        height: 80px; /* slightly smaller logo for mobile */
+    }
     .header-brand {
         /* Mobile: smaller, fluid size to avoid overly large title on narrow viewports */
         font-size: clamp(1.2rem, 6vw, 2rem);
@@ -319,4 +323,10 @@
         width: 100%;
         text-align: center;
     }
+
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+}
 }

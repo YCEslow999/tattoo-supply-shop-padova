@@ -4,7 +4,8 @@
   padding: 0;
   text-align: center;
   overflow-x: hidden;
-  background-color: #222222;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+
 }
 /* Keep a stable root font-size to avoid overly small text on narrow screens.
    If you want slight scaling, prefer `clamp()` or modest percent values. */

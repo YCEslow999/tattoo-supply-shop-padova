@@ -44,8 +44,9 @@ export const SectionsBar = () => {
 
 
 
-  const handleItemClick = (item) => {
-    navigate("/shop", { state: { selectedCategory: item } });
+  // item is the brand name; we also need the category context when navigating
+  const handleItemClick = (category, item) => {
+    navigate("/shop", { state: { selectedCategory: category, selectedBrand: item } });
   };
 
 
@@ -97,7 +98,7 @@ export const SectionsBar = () => {
                       key={brand.name}
                       className="drawer-item"
                       onClick={() => {
-                        handleItemClick(brand.name);
+                        handleItemClick(catKey, brand.name);
                         setDrawerOpen(false);
                       }}
                     >
@@ -125,7 +126,7 @@ export const SectionsBar = () => {
           fetchedBrands[active]?.map(brand => (
             <div key={brand.name} className="dropdown-item"
               onClick={() => {
-                handleItemClick(brand.name);
+                handleItemClick(active, brand.name);
                 console.log(brand.name);
               }
 

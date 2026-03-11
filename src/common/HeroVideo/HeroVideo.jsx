@@ -16,7 +16,7 @@ export const HeroVideo = () => {
         <div className="separator">
         </div>
         <div className="testo-video">
-          <h1 className="title-video">prodotti</h1>
+          <h1 className="title-video">categorie in primo piano</h1>
           <img src={chromecross} alt="Chrome Cross" className="chrome-cross" />
         </div>
         <CategoryCard title="" imageUrl={inchiostroImage} path="/inchiostro" />

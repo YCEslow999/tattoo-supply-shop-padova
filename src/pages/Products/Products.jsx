@@ -18,6 +18,7 @@ export const Products = () => {
 
   const location = useLocation();
   const selectedCategoryFromState = location.state?.selectedCategory;
+  const selectedBrandFromState = location.state?.selectedBrand; // brand name if coming from SectionsBar
 
   /* Fetch di TUTTI i prodotti dal backend */
   useEffect(() => {
@@ -34,13 +35,17 @@ export const Products = () => {
       .catch(err => console.log('categories fetch error', err));
   }, []);
 
-  /* Se vengo da SectionsBar, imposto la categoria selezionata */
+  /* Se vengo da SectionsBar, imposto la categoria selezionata e, se fornito, la ricerca sul brand */
   useEffect(() => {
     if (selectedCategoryFromState) {
       setSelectedCategoryLocal(String(selectedCategoryFromState));
-      setSearch('');
+      if (selectedBrandFromState) {
+        setSearch(String(selectedBrandFromState));
+      } else {
+        setSearch('');
+      }
     }
-  }, [selectedCategoryFromState]);
+  }, [selectedCategoryFromState, selectedBrandFromState]);
 
   const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
   const getCategoryImageUrl = (categoryObj) => {
@@ -63,11 +68,20 @@ export const Products = () => {
     let filtered = products;
 
     if (selectedCategoryLocal) {
-      filtered = products.filter(p => p.category === selectedCategoryLocal);
-    } else if (search.trim()) {
+      filtered = filtered.filter(p => p.category === selectedCategoryLocal);
+    }
+
+    if (!selectedCategoryLocal && search.trim()) {
+      // only search across all when no category selected
       const searchLower = search.toLowerCase();
-      filtered = products.filter(product => product.name.toLowerCase().includes(searchLower));
-    } else {
+      filtered = filtered.filter(product => product.name.toLowerCase().includes(searchLower));
+    } else if (selectedCategoryLocal && search.trim()) {
+      // within a category, allow search by name/brand
+      const searchLower = search.toLowerCase();
+      filtered = filtered.filter(product => product.name.toLowerCase().includes(searchLower));
+    }
+
+    if (!selectedCategoryLocal && !search.trim()) {
       // Se non c'è categoria selezionata e non c'è ricerca, non mostrare prodotti
       filtered = [];
     }

@@ -105,6 +105,18 @@ const handleCheckout = () => {
                         </button>
                         <button onClick={handleGoBack} className="back-btn">Torna indietro</button>
                     </div>
+
+                    {/* Descrizione section */}
+                    <div className="description-section">
+                        <hr />
+                        <h2 className="description-title">Descrizione</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
+                            nec nisl odio. Mauris vehicula at nunc id posuere. Fusce vel elit
+                            nec ipsum vehicula sollicitudin. Donec vel odio at orci congue
+                            suscipit. Suspendisse potenti.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
