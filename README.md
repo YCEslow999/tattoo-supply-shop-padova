@@ -47,11 +47,10 @@ MONGO_URI=your_mongo_uri
 ### 4. Run the project
 
 ```bash
-npm run dev
+npm run application (it starts both the frontend and the backend)
 ```
 
 ---
 
 ## 📸 Screenshots
-
-(Add screenshots here)
+![Cart](src/assets/Cart.png)
