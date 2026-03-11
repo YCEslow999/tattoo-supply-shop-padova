@@ -53,4 +53,22 @@ npm run application (it starts both the frontend and the backend)
 ---
 
 ## 📸 Screenshots
+
+# Homepage
+![Homepage](src/assets/Homepage.png)
+
+
+
+
+# Checkout
+![Checkout](src/assets/Checkout.png)
+
+
+
+# Catalog
+![Shop](src/assets/Shop.png)
+
+
+
+# Cart
 ![Cart](src/assets/Cart.png)
